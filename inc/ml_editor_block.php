@@ -194,7 +194,8 @@ function ml_enqueue_block_editor_assets() {
 add_filter('rest_pre_dispatch', 'morelang\ml_rest_pre_dispatch', 10, 3);
 function ml_rest_pre_dispatch( $null_val, $this_obj, $request ) {
 	if (method_exists($request, 'get_body')) {
-		$data = json_decode( $request->get_body() );
+		$body = $request->get_body();
+		$data = !empty($body) ? json_decode($body) : null;
 		if ( isset($data->morelang_non_default) && $data->morelang_non_default ) {
 			$obj = new \stdClass();
 			$obj->data = new \stdClass();
